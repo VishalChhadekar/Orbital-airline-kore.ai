@@ -102,23 +102,21 @@
     </footer>
 
     <!-- Chatbot Integration -->
-    <!-- Add the Kore.ai SDK script -->
+    <!-- Load Kore.ai SDK script directly to make it globally accessible -->
     <script src="https://cdn.jsdelivr.net/npm/kore-web-sdk@latest/dist/kore-web-sdk.min.js"></script>
-    <script type="module">
-        import { chatConfig, chatWindow } from 'kore-web-sdk';
-
-        // Configure the chat
-        const config = chatConfig({
-            clientId: 'YOUR_CLIENT_ID',
-            clientSecret: 'YOUR_CLIENT_SECRET',
-            botId: 'YOUR_BOT_ID',
-            botName: 'Orbital Airlines Assistant',
+    <script>
+        // Configure the chat with global SDK functions
+        const config = koreWebSdk.chatConfig({
+            clientId: 'cs-c23b729c-20ff-51da-a8d4-43e4556b2fe4',
+            clientSecret: '7yofPQ5P58rI1gTyUwdTtSLOVPPXDoT0aay7mUsyIB4=',
+            botId: 'st-a40177b9-4d18-5506-af61-9af8a3e48028',
+            botName: 'Traveller',
             isSendButton: true,
             allowIframe: false,
         });
 
         // Initialize chat window
-        const chat = new chatWindow(config);
+        const chat = koreWebSdk.chatWindow(config);
 
         // Function to open the chat window
         function openChat() {
