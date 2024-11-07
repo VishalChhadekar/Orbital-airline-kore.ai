@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@koredev/kore-web-sdk": "^11.7.0-rc.ee4116a"
+  }
+}
