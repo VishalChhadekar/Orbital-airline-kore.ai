@@ -18,9 +18,22 @@
             align-items: center;
             border-radius: 10px;
         }
+
+        /* Chatbot button styling */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
-    <!-- Kore.ai Web SDK Script -->
-    <script src="https://cdn.jsdelivr.net/npm/kore-web-sdk/dist/kore-web-sdk.min.js"></script>
 </head>
 
 <body>
@@ -88,24 +101,33 @@
             at 1-800-FLY-HIGH.</p>
     </footer>
 
-    <!-- Chatbot Script -->
-    <script>
-        // Configure chatbot options
-        let botOptions = koreWebSdk.chatConfig.botOptions;
+    <!-- Chatbot Integration -->
+    <!-- Add the Kore.ai SDK script -->
+    <script src="https://cdn.jsdelivr.net/npm/kore-web-sdk@latest/dist/kore-web-sdk.min.js"></script>
+    <script type="module">
+        import { chatConfig, chatWindow } from 'kore-web-sdk';
 
-        botOptions.JWTUrl = "https://jwt-service-provider.vercel.app/api/users/st"; // Server URL to generate JWT token
-        botOptions.userIdentity = "vishal.chhadekar@aionos.ai"; // Unique user identifier
-        botOptions.botInfo = {
-            name: "Traveller",
-            "_id": "st-a40177b9-4d18-5506-af61-9af8a3e48028"
-        };
-        botOptions.clientId = "cs-c23b729c-20ff-51da-a8d4-43e4556b2fe4";
-        botOptions.clientSecret = "7yofPQ5P58rI1gTyUwdTtSLOVPPXDoT0aay7mUsyIB4";
+        // Configure the chat
+        const config = chatConfig({
+            clientId: 'YOUR_CLIENT_ID',
+            clientSecret: 'YOUR_CLIENT_SECRET',
+            botId: 'YOUR_BOT_ID',
+            botName: 'Orbital Airlines Assistant',
+            isSendButton: true,
+            allowIframe: false,
+        });
 
-        // Create chat window instance and show the chatbot
-        const chatWindowInstance = new koreWebSdk.chatWindow(koreWebSdk.chatConfig);
-        chatWindowInstance.show();
+        // Initialize chat window
+        const chat = new chatWindow(config);
+
+        // Function to open the chat window
+        function openChat() {
+            chat.show();
+        }
     </script>
+
+    <!-- Chatbot button to open the chat window -->
+    <button class="chatbot-button" onclick="openChat()">💬</button>
 
 </body>
 
