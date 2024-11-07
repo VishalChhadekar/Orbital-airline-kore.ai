@@ -46,9 +46,7 @@
             <li><a href="#destinations">Destinations</a></li>
             <li><a href="#about">About Us</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li id="login-logout-item">
-                <!-- Login or Logout will be dynamically inserted here -->
-            </li>
+            <li id="login-logout-item"></li>
         </ul>
         <div class="right-logo">
             <img src="img/Image.jpg" alt="Right Logo">
@@ -70,7 +68,6 @@
         <h2>Discover Our Popular Destinations</h2>
         <p>From the serene beaches of the Maldives to the bustling cityscapes of Tokyo, Orbital Airlines takes you where
             you want to be with comfort and ease.</p>
-
         <div class="cards">
             <div class="card">
                 <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fHBhcmlzfGVufDB8fHx8MTY5NTA4MjY3NQ&ixlib=rb-1.2.1&q=80&w=1080"
@@ -102,26 +99,33 @@
     </footer>
 
     <!-- Chatbot Integration -->
-    <!-- Load Kore.ai SDK script directly to make it globally accessible -->
-    <script src="https://cdn.jsdelivr.net/npm/kore-web-sdk@latest/dist/kore-web-sdk.min.js"></script>
+    <!-- Load Kore.ai SDK script and ensure it's fully loaded before using it -->
+    <script src='https://cdn.jsdelivr.net/npm/kore-web-sdk@11.7.0/dist/umd/kore-web-sdk-umd-chat.min.js'></script>
     <script>
-        // Configure the chat with global SDK functions
-        const config = koreWebSdk.chatConfig({
-            clientId: 'cs-c23b729c-20ff-51da-a8d4-43e4556b2fe4',
-            clientSecret: '7yofPQ5P58rI1gTyUwdTtSLOVPPXDoT0aay7mUsyIB4=',
-            botId: 'st-a40177b9-4d18-5506-af61-9af8a3e48028',
-            botName: 'Traveller',
-            isSendButton: true,
-            allowIframe: false,
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if koreWebSdk is available after SDK script loads
+            if (typeof koreWebSdk !== 'undefined') {
+                // Configure the chat with global SDK functions
+                const config = koreWebSdk.chatConfig({
+                    clientId: 'cs-c23b729c-20ff-51da-a8d4-43e4556b2fe4',
+                    clientSecret: '7yofPQ5P58rI1gTyUwdTtSLOVPPXDoT0aay7mUsyIB4=',
+                    botId: 'st-a40177b9-4d18-5506-af61-9af8a3e48028',
+                    botName: 'Traveller',
+                    isSendButton: true,
+                    allowIframe: false,
+                });
+
+                // Initialize chat window
+                const chat = koreWebSdk.chatWindow(config);
+
+                // Function to open the chat window
+                window.openChat = function () {
+                    chat.show();
+                };
+            } else {
+                console.error("koreWebSdk is not defined. Please check the SDK script path.");
+            }
         });
-
-        // Initialize chat window
-        const chat = koreWebSdk.chatWindow(config);
-
-        // Function to open the chat window
-        function openChat() {
-            chat.show();
-        }
     </script>
 
     <!-- Chatbot button to open the chat window -->
