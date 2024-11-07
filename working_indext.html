@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital Airlines - Explore the World with Comfort</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-logout-icon {
+            width: 25px;
+            height: 25px;
+            color: #fff !important;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <img src="img/orbital_airline_logo.png" style="width: 160px; height: 60px; border-radius: 10px;"
+            alt="Right Logo">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li id="login-logout-item">
+                <!-- Login or Logout will be dynamically inserted here -->
+            </li>
+        </ul>
+        <div class="right-logo">
+            <img src="img/Image.jpg" alt="Right Logo">
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="home">
+        <div class="overlay"></div>
+        <div class="header-content">
+            <h1>Fly Beyond Limits</h1>
+            <p>Book your next adventure with Orbital Airlines.</p>
+            <button class="cta-button">Book Now</button>
+        </div>
+    </header>
+
+    <!-- Popular Destinations Section -->
+    <section id="destinations">
+        <h2>Discover Our Popular Destinations</h2>
+        <p>From the serene beaches of the Maldives to the bustling cityscapes of Tokyo, Orbital Airlines takes you where
+            you want to be with comfort and ease.</p>
+
+        <div class="cards">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fHBhcmlzfGVufDB8fHx8MTY5NTA4MjY3NQ&ixlib=rb-1.2.1&q=80&w=1080"
+                    alt="Paris">
+                <h3 class="card-title">Paris, France</h3>
+                <p class="card-description">The city of love awaits you with iconic sights and charming cafes.</p>
+            </div>
+            <div class="card">
+                <img src="https://media.istockphoto.com/id/1131743616/photo/aerial-view-of-tokyo-cityscape-with-fuji-mountain-in-japan.webp?a=1&b=1&s=612x612&w=0&k=20&c=M4BnBxDnlp1EQGHutJR9AAUI_7O9nwCvXKpuUmqrUdQ="
+                    alt="Tokyo">
+                <h3 class="card-title">Tokyo, Japan</h3>
+                <p class="card-description">Experience the future in Tokyo's neon-lit streets and rich cultural history.
+                </p>
+            </div>
+            <div class="card">
+                <img src="https://media.istockphoto.com/id/1348963437/photo/foot-path-to-jetty.webp?a=1&b=1&s=612x612&w=0&k=20&c=BIFdGYKgBUhCi6MPrwjsfLjn2-RpZMLzAe4V7zEV0p4="
+                    alt="Maldives">
+                <h3 class="card-title">Maldives</h3>
+                <p class="card-description">Relax in the pristine waters of the Maldives, your paradise getaway.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>Ready to take off with Orbital Airlines? Let's get you where you want to go.</p>
+        <p>For inquiries, email us at <a href="mailto:info@orbitalairlines.com">info@orbitalairlines.com</a> or call us
+            at 1-800-FLY-HIGH.</p>
+    </footer>
+
+    <!-- Login/Sign Up Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Login</h2>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button onclick="loginUser()">Login</button>
+        </div>
+    </div>
+
+    <!-- Integrate Chatbot -->
+
+    <script src='https://cdn.jsdelivr.net/npm/kore-web-sdk@11.6.1/dist/umd/kore-web-sdk-umd-chat.min.js'></script>
+
+
+    <script>
+        // Chatbot initialization function
+        function runChatBotInitialization() {
+            const userEmail = localStorage.getItem('userEmail') || 'default@example.com';
+            // const userEmail = localStorage.getItem('userEmail') || null;
+            console.log("UserEmail: ", userEmail);
+
+            if (userEmail) {
+                // Update the chat configuration to pass the user's email as custom context data
+                KoreChatSDK.chatConfig.botOptions.API_KEY_CONFIG.KEY = 'ef055ac22dd148b6b507302b862fce70a5ee6600a29a49b887709dd3650d0defsta4'; //Travelers
+                //KoreChatSDK.chatConfig.botOptions.API_KEY_CONFIG.KEY = '1b0d212199c046f8b9516c29a9910e3aa5bad64d826f4f37b58ed8f45e9a7d3ast15'; //TravelersMate
+
+                // Pass user's email as customData to be accessible in the bot's context
+                KoreChatSDK.chatConfig.botOptions.botInfo.customData = {
+                    webContext: {
+                        email: userEmail
+                    }
+                };
+
+                //File uploder plugin
+                KoreChatSDK.chatConfig.botOptions.botInfo.plugin = {
+                    FileUploader: {
+                        enable: true
+                    }
+                };
+                //
+
+                // Optional: Set userIdentity to make sure the bot uniquely identifies the user
+                KoreChatSDK.chatConfig.botOptions.botInfo.userIdentity = userEmail;
+
+                // Initialize the chat window with the updated configuration
+                new KoreChatSDK.chatWindow().show(KoreChatSDK.chatConfig);
+
+                console.log("KoreChatSDK.chatConfig: ", KoreChatSDK.chatConfig);
+            } else {
+                console.log("No user email found, chatbot not initialized.");
+            }
+        }
+
+        // Login User
+        function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('userEmail', email);
+                closeModal();
+                // updateLoginLogout(); // Update the login/logout icon right after login
+                window.location.href = '#home';
+
+                // Initialize chatbot after successful login
+                runChatBotInitialization();
+            } else {
+                alert('Please enter both email and password.');
+            }
+        }
+
+        // Show or hide login modal
+        function openModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Update Login/Logout button based on login status
+        function updateLoginLogout() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginLogoutBtn = document.getElementById('loginLogoutBtn');
+
+            if (isLoggedIn) {
+                loginLogoutBtn.innerText = 'Logout';
+                loginLogoutBtn.onclick = logoutUser;
+            } else {
+                loginLogoutBtn.innerText = 'Login';
+                loginLogoutBtn.onclick = openModal;
+            }
+        }
+
+        // Logout User
+        function logoutUser() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            // updateLoginLogout();
+            alert('Logged out successfully!');
+        }
+
+        // Initialize the chatbot when the page loads
+        window.onload = function () {
+            // updateLoginLogout();
+            runChatBotInitialization();
+        };
+    </script>
+
+</body>
+
+</html>
